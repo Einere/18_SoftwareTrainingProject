@@ -1,0 +1,8 @@
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSserverTCP\Server\bin\Debug\Server.exe
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSserverTCP\Server\bin\Debug\Server.pdb
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSserverTCP\Server\obj\Debug\SGSserverTCP.csprojResolveAssemblyReference.cache
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSserverTCP\Server\obj\Debug\Server.SGSserverForm.resources
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSserverTCP\Server\obj\Debug\Server.Properties.Resources.resources
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSserverTCP\Server\obj\Debug\SGSserverTCP.csproj.GenerateResource.Cache
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSserverTCP\Server\obj\Debug\Server.exe
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSserverTCP\Server\obj\Debug\Server.pdb

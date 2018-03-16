@@ -1,0 +1,8 @@
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSclientTCP\SGSclient\bin\Debug\SGSclient.exe
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSclientTCP\SGSclient\bin\Debug\SGSclient.pdb
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSclientTCP\SGSclient\obj\Debug\SGSclient.SGSClient.resources
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSclientTCP\SGSclient\obj\Debug\SGSclient.LoginForm.resources
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSclientTCP\SGSclient\obj\Debug\SGSclient.Properties.Resources.resources
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSclientTCP\SGSclient\obj\Debug\SGSclientTCP.csproj.GenerateResource.Cache
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSclientTCP\SGSclient\obj\Debug\SGSclient.exe
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\SGSclientTCP\SGSclient\obj\Debug\SGSclient.pdb
