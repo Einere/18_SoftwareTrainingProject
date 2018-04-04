@@ -1,0 +1,10 @@
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\RTC\RTC\bin\Debug\RTC.exe.config
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\RTC\RTC\bin\Debug\RTC.exe
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\RTC\RTC\bin\Debug\RTC.pdb
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\RTC\RTC\obj\Debug\RTC.FormMain.resources
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\RTC\RTC\obj\Debug\RTC.Properties.Resources.resources
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\RTC\RTC\obj\Debug\RTC.csproj.GenerateResource.Cache
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\RTC\RTC\obj\Debug\RTC.exe
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\RTC\RTC\obj\Debug\RTC.pdb
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\RTC\RTC\obj\Debug\RTC.FormClient.resources
+C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\RTC\RTC\obj\Debug\RTC.FormServer.resources
