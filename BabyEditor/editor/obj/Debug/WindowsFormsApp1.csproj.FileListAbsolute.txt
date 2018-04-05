@@ -1,0 +1,10 @@
+c:\users\김정\source\repos\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojResolveAssemblyReference.cache
+c:\users\김정\source\repos\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+c:\users\김정\source\repos\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+c:\users\김정\source\repos\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+c:\users\김정\source\repos\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+c:\users\김정\source\repos\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+c:\users\김정\source\repos\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+c:\users\김정\source\repos\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+c:\users\김정\source\repos\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\김정\source\repos\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Highlighter.resources
