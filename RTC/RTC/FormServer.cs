@@ -14,9 +14,25 @@ using System.Net.Sockets;
 using System.Collections;
 using System.Threading;
 
+using System.Runtime.Serialization.Formatters.Binary;
+
 namespace RTC {
     public partial class FormServer :Form {
-        TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 6067);
+        [Serializable]
+        public enum MSG_TYPE {
+            MESSAGE,
+            EDITOR,
+            VOICE,
+            COMMAND
+        };
+
+        [Serializable]
+        public struct Message {
+            public MSG_TYPE type;
+            public string message;
+        };
+
+        TcpListener listener = new TcpListener(IPAddress.Any, 6067);
         public static ArrayList soketArray = new ArrayList();
                     
         public FormServer() {
@@ -27,7 +43,7 @@ namespace RTC {
             if (lblServerState.Text == "서버 상태 : STOP") {
                 //Listener Start
                 listener.Start();
-
+                
                 //Client로 부터 연결을 기다리는 Thread생성
                 Thread t_WaitSocket = new Thread(new ThreadStart(WaitSocket));
                 t_WaitSocket.IsBackground = true;
@@ -60,6 +76,23 @@ namespace RTC {
                     //Chatting을 실행하는Thread 생성 
                     Thread thd_ChatProcess = new Thread(new ThreadStart(chat.Process));
                     thd_ChatProcess.Start();
+                    
+                    /* 
+                     * 입장시 접속자 아이피 출력 소스
+                     
+                    IPEndPoint remoteIpEndPoint = sktClient.RemoteEndPoint as IPEndPoint;
+                    IPEndPoint localIpEndPoint = sktClient.LocalEndPoint as IPEndPoint;
+                    if (remoteIpEndPoint != null) {
+                        // Using the RemoteEndPoint property.
+                        txtServerLog.AppendText("I am connected to " + remoteIpEndPoint.Address +  "on port number " + remoteIpEndPoint.Port + "\r\n");
+                    }
+
+                    if (localIpEndPoint != null) {
+                        // Using the LocalEndPoint property.
+                        txtServerLog.AppendText("My local IpAddress is :" + localIpEndPoint.Address + " I am connected on port number " + localIpEndPoint.Port + "\r\n");
+                    }
+                    */
+
                 } catch (System.Exception) {
                     FormServer.soketArray.Remove(sktClient);
                     break;
@@ -87,18 +120,43 @@ namespace RTC {
 
         public void Process() {
             while (true) {
-                try {
-                    string message = streamReader.ReadLine();
-                    if (message != null && message != "") {
-                        this.txtLog.AppendText(message + "\r\n");    //줄 바꿈을 하며 텍스트 내용을 더해나감 
-                        byte[] sendData = Encoding.Default.GetBytes(message + "\r\n");
-                        ArrayList remove_soketArray = new ArrayList();
-                        lock (FormServer.soketArray) {
-                            foreach (Socket soket in FormServer.soketArray) { //sokretArray안의 soket값들을 돌리면서
-                                NetworkStream stream = new NetworkStream(soket);
-                                stream.Write(sendData, 0, sendData.Length);
-                            }
-                        }
+                try {                 
+                    //
+                    BinaryFormatter binaryFormatter = new BinaryFormatter();
+                    Message msg = new Message();
+                    msg = (Message)binaryFormatter.Deserialize(networkStream);
+
+                    switch (msg.type) {
+                        case MSG_TYPE.MESSAGE:
+                            if (msg.message != null && msg.message != "") {
+                                if (this.txtLog.TextLength == 0)
+                                    this.txtLog.AppendText("\n" + msg.message);
+                                else
+                                    this.txtLog.AppendText("\r\n" + msg.message);
+
+                                //msg.message = msg.message;                                
+                                                                
+                                lock (FormServer.soketArray) {
+                                    foreach (Socket soket in FormServer.soketArray) { //sokretArray안의 soket값들을 돌리면서
+                                        NetworkStream stream = new NetworkStream(soket);
+                                        binaryFormatter.Serialize(stream, msg);
+                                    }
+                                }
+                            }                            
+
+                            break;
+                        case MSG_TYPE.EDITOR:
+
+                            break;
+                        case MSG_TYPE.VOICE:
+
+                            break;
+                        case MSG_TYPE.COMMAND:
+
+                            break;
+                        default:
+
+                            break;
                     }
                 } catch (System.Exception) {
                     FormServer.soketArray.Remove(socketClient);

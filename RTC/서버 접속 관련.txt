@@ -1,0 +1,10 @@
+
+        TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 6067);
+
+=> 	127.0.0.1로만 접속할 수 있음.
+
+
+
+        TcpListener listener = new TcpListener(IPAddress.Any, 6067);
+
+=>	다른 클라이언트로부터 서버 IP로 접속 가능,,,

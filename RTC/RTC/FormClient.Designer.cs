@@ -30,6 +30,7 @@
             this.btnConnect = new System.Windows.Forms.Button();
             this.txtClientLog = new System.Windows.Forms.TextBox();
             this.txtMessage = new System.Windows.Forms.TextBox();
+            this.cmbDeviceList = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblID
@@ -93,11 +94,20 @@
             this.txtMessage.TabIndex = 4;
             this.txtMessage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMessage_KeyPress);
             // 
+            // cmbDeviceList
+            // 
+            this.cmbDeviceList.FormattingEnabled = true;
+            this.cmbDeviceList.Location = new System.Drawing.Point(28, 368);
+            this.cmbDeviceList.Name = "cmbDeviceList";
+            this.cmbDeviceList.Size = new System.Drawing.Size(240, 20);
+            this.cmbDeviceList.TabIndex = 5;
+            // 
             // FormClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(617, 329);
+            this.ClientSize = new System.Drawing.Size(617, 550);
+            this.Controls.Add(this.cmbDeviceList);
             this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.txtClientLog);
             this.Controls.Add(this.btnConnect);
@@ -109,6 +119,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RTC Client";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormClient_FormClosed);
+            this.Load += new System.EventHandler(this.FormClient_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,5 +134,6 @@
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.TextBox txtClientLog;
         private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.ComboBox cmbDeviceList;
     }
 }
