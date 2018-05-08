@@ -11,215 +11,167 @@ using System.Windows.Forms;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Collections;
 using System.Threading;
 
 using SlimDX.DirectSound;
 using SlimDX.Multimedia;
 
-using System.Runtime.Serialization.Formatters.Binary;
-
+using PacketLibrary;
 
 namespace RTC {
-    [Serializable]
-    public enum MSG_TYPE {
-        MESSAGE,
-        EDITOR,
-        VOICE,
-        COMMAND
-    };
-
-    [Serializable]
-    public struct Message {
-        public MSG_TYPE type;
-        public string message;        
-    };
-
     public partial class FormClient :Form {
-        TcpClient tcpClient = null;
-        NetworkStream networkStream = null;
-        //Chatting을 실행하는 Class 인스턴스화시킴
-        CHAT chat = new CHAT();
+        private static int SERVER_PORT = 6067;
+
+        TcpClient client = null;
+        NetworkStream stream = null;
+
+        Thread SendingThread = null;
+        Thread ReceivingThread = null;
 
         public FormClient() {
             InitializeComponent();
         }
 
         private void txtMessage_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == Convert.ToChar(Keys.Enter)) {
-                if (btnConnect.Text == "Log-Out") {  //Text가 로그아웃이면                    
-                    Message msg = new Message();
-                    msg.type = MSG_TYPE.MESSAGE;
-                    msg.message = "<" + txtID.Text + "> " + txtMessage.Text;
+            this.Invoke(new MethodInvoker(delegate () {
+                if (e.KeyChar == Convert.ToChar(Keys.Enter)) {      // Enter키
+                    if (btnConnect.Text == "Log-Out") {             // 접속 상태
+                        if (txtMessage.Text != string.Empty) {      // 빈 값인지 확인
+                            MSGText msg = new MSGText(string.Format("<{0}> : {1}", txtID.Text, txtMessage.Text));
+                            Send(msg);
 
-                    StructSend(msg);
+                            txtMessage.Clear();
+                            txtMessage.Focus();
+                            e.Handled = true;
+                        }
+                    }
                 }
-
-                txtMessage.Clear();
-                txtMessage.Focus();
-
-                e.Handled = true;
-            }
+            }));            
         }
 
         private void btnConnect_Click(object sender, EventArgs e) {
-            if (btnConnect.Text == "Log-In") { //로그인 ok
-                try {
-                    //IP Address 할당
-                    IPAddress ipaAddress = IPAddress.Parse(txtServerIP.Text);
-                    //TCP Client 선언
-                    tcpClient = new TcpClient();
-                    //TCP Client연결
-                    tcpClient.Connect(ipaAddress, 6067);
-                    networkStream = tcpClient.GetStream();
-                    chat.Setup(networkStream, this.txtClientLog);
-                    //Thread를 생성하고 Start
-                    Thread thd_Receive = new Thread(new ThreadStart(chat.Process));
-                    thd_Receive.Start();
-                    btnConnect.Text = "Log-Out";        //접속문구를 열어주고, 연결텍스트에는 Logout을 출력
-                    
-                    Message msg = new Message();
-                    msg.type = MSG_TYPE.MESSAGE;
-                    msg.message = "<" + txtID.Text + "> 님께서 접속 하셨습니다.";
+            this.Invoke(new MethodInvoker(delegate () {
+                if (btnConnect.Text == "Log-In") { 
+                     // pre-condition
+                    if (txtServerIP.Text == string.Empty ||
+                              txtID.Text == string.Empty    ) {
 
-                    StructSend(msg);
+                        MessageBox.Show("IP와 ID 모두 입력해주세요!");
+                        return;
+                    }
                     
-                } catch (System.Exception Err) {
-                    MessageBox.Show("Chatting Server 오류발생 또는 Start 되지 않았거나\n\n" + Err.Message, "Client");
+                    Connect();
+
+                } else {
+
+                    MSGText msg = new MSGText(string.Format("<{0}>님께서 접속 해제하셨습니다.", txtID.Text));
+                    Packet.SendPacket(stream, msg);
+                    Disconnect();
+
                 }
-            } else {
-                MessageSend("<" + txtID.Text + "> 님께서 접속해제 하셨습니다.", false);
-                btnConnect.Text = "Log-In";
-                chat.Close();
-                networkStream.Close();
-                tcpClient.Close();
-            }
+            }));
         }
 
         private void FormClient_FormClosed(object sender, FormClosedEventArgs e) {
-            if (btnConnect.Text == "Log-In") {    //Text에 Login이 뜨면
-                return;
-            }
-            
-            Message msg = new Message();
-            msg.type = MSG_TYPE.MESSAGE;
-            msg.message = "<" + txtID.Text + "> 님께서 접속해제 하셨습니다.";
+            this.Invoke(new MethodInvoker(delegate () {
+                if (btnConnect.Text == "Log-In") {    //Text에 Login이 뜨면
+                    return;
+                } else {
+                    MSGText msg = new MSGText(string.Format("<{0}>님께서 접속 해제하셨습니다.", txtID.Text));
+                    Packet.SendPacket(stream, msg);
+                    Disconnect();
+                }
+            }));
 
-            StructSend(msg);
-            
-
-            chat.Close();               //Text에 입력된 이름과 문구를 출력
-            networkStream.Close();      //그렇지 않으면 ntwStream과 tcpClient를 모두 닫는다.
-            tcpClient.Close();
+            Application.Exit();
         }
 
-        private void MessageSend(string message, Boolean isMsg) {
-            try {
-                //보낼 데이터를 읽어 Default 형식의 바이트 스트림으로 변환 해서 전송
-                string dataToSend = "\n" + message;
-                byte[] data = Encoding.Unicode.GetBytes(dataToSend);
-                networkStream.Write(data, 0, data.Length);
-            } catch (System.Exception Err) {
-                if (isMsg == true) {
-                    MessageBox.Show("Chatting Server가 오류발생 또는 Start 되지 않았거나\n\n" + Err.Message, "Client");
-                    btnConnect.Text = "Log-In";
-                    chat.Close();
-                    networkStream.Close();
-                    tcpClient.Close();
+        public void Connect() {
+            this.Invoke(new MethodInvoker(delegate () {
+                try {
+                    client = new TcpClient();  // 소켓 생성
+                    client.Connect(txtServerIP.Text, SERVER_PORT);
+
+                    // 송수신 스트림을 가져온다.
+                    stream = client.GetStream();
+                } catch {
+                    MessageBox.Show("해당 서버가 열려있지 않습니다!");
+                    return;
                 }
-            }
+
+                Thread thd_Receive = new Thread(new ThreadStart(Receive));
+                thd_Receive.Start();
+
+                MSGText msg = new MSGText(string.Format("<{0}>님께서 접속하셨습니다.", txtID.Text));
+                Packet.SendPacket(stream, msg);
+
+                btnConnect.Text = "Log-Out";
+                txtMessage.Focus();
+            }));
+        }
+        
+        public void Disconnect() {
+            this.Invoke(new MethodInvoker(delegate () {
+                try {
+                    stream.Close();
+                    client.Close();
+                    ReceivingThread.Abort();
+                } catch {
+                }
+
+                btnConnect.Text = "Log-In";
+            }));
         }
 
-        private void StructSend(Message msg) {
-            try {
-                BinaryFormatter binaryFormatter = new BinaryFormatter();               
-                switch ( msg.type ) {
-                    case MSG_TYPE.MESSAGE:
-                        //msg.message = msg.message;
-                        binaryFormatter.Serialize(networkStream, msg);
-
-                        break;
-                    case MSG_TYPE.EDITOR:
-
-                        break;
-                    case MSG_TYPE.VOICE:
-
-                        break;
-                    case MSG_TYPE.COMMAND:
-
-                        break;
-                    default:
-
-                        break;
-                }
-
-            } catch (System.Exception Err) {
-                if (msg.type == MSG_TYPE.COMMAND) {
-                    MessageBox.Show("Chatting Server가 오류발생 또는 Start 되지 않았거나\n\n" + Err.Message, "Client");
-                    btnConnect.Text = "Log-In";
-                    chat.Close();
-                    networkStream.Close();
-                    tcpClient.Close();
-                }
-            }
-
+        public void Send(Packet msg) {
+            /*
+            SendingThread = new Thread(() => Packet.SendPacket(stream, msg));
+            SendingThread.Start();
+            */
+            Packet.SendPacket(stream, msg);
         }
 
-        public class CHAT {
-            private Encoding encoding = Encoding.GetEncoding("KS_C_5601-1987");
-            private TextBox txtLog;
-            private NetworkStream networkStream;
-            private StreamReader streamReader;
+        public void Receive() {
+            byte[] buffer = null;
 
-            public void Setup(NetworkStream networkStream, TextBox txtLog) {
-                this.txtLog = txtLog;
-                this.networkStream = networkStream;
-                this.streamReader = new StreamReader(networkStream, encoding);
-            }
+            while (true) {
+                try {
+                    Packet packet = Packet.ReceivePacket(stream, buffer);                    
+                    switch (packet.type) {
+                        case PacketType.MESSAGE:   
+                            ProcessMessage(packet);
+                            break;                            
 
-            public void Process() {
-                while (true) {
-                    try {
-                        //string message = streamReader.ReadLine();
-                        BinaryFormatter binaryFormatter = new BinaryFormatter();
-                        Message msg = new Message();
-                        msg = (Message)binaryFormatter.Deserialize(networkStream);
-
-                        switch (msg.type) {
-                            case MSG_TYPE.MESSAGE:
-                                if (msg.message != null && msg.message != "") {
-                                    if( this.txtLog.TextLength == 0 ) // 처음 데이터 추가시 \n만 해줌, 처음 데이터 추가시 \r\n하면 두줄이 추가됨
-                                        this.txtLog.AppendText("\n" + msg.message);
-                                    else
-                                        this.txtLog.AppendText("\r\n" + msg.message);
-                                }
-
-                                break;
-                            case MSG_TYPE.EDITOR:
-
-                                break;
-                            case MSG_TYPE.VOICE:
-
-                                break;
-                            case MSG_TYPE.COMMAND:
-
-                                break;
-                            default:
-
-                                break;
-                        }
-                    } catch (System.Exception) {
-                        break;
+                        default:
+                            break;
                     }
+                } catch (Exception ex) {
+                    AddLog("서버와의 연결을 해제합니다.");
+                    Disconnect();
+                    break;
                 }
-            }
-
-            public void Close() {
-                networkStream.Close();
-                streamReader.Close();
             }
         }
 
+        public void AddLog(string text) {
+            this.Invoke(new MethodInvoker(delegate () {
+                if (txtClientLog.Text == string.Empty) {
+                    txtClientLog.Text += text;
+                } else {
+                    txtClientLog.Text += "\r\n" + text;
+                }
+
+                txtClientLog.Focus();
+                txtClientLog.SelectionStart = txtClientLog.Text.Length;
+                txtClientLog.ScrollToCaret();
+                txtMessage.Focus();
+            }));
+        }
+
+        public void ProcessMessage(Packet packet) {
+            MSGText msg = (MSGText)packet;
+            AddLog(msg.message);
+        }
 
         // 하위 메소드 들은 음성 채팅을 위한 소스이며 아직 구현 중
         // 참조: http://powerprog.blogspot.kr/2012/05/blog-post_14.html
@@ -229,8 +181,7 @@ namespace RTC {
             DeviceCollection coll = DirectSoundCapture.GetDevices();
             foreach (DeviceInformation dev in coll) {
                 cmbDeviceList.Items.Add(dev.Description.ToString());
-            }
-            
+            }            
         }
 
         DirectSound _soundDevice;
@@ -264,9 +215,13 @@ namespace RTC {
             _description.SizeInBytes = waveFormat.AverageBytesPerSecond / 5;
             _description.Format = waveFormat;
         }
+
+        private void txtMessage_TextChanged(object sender, EventArgs e) {
+
+        }
         /*
-        public void CreateBuffer() {
-            Buffer = new SecondarySoundBuffer(_soundDevice, _description);
-        }*/
+public void CreateBuffer() {
+   Buffer = new SecondarySoundBuffer(_soundDevice, _description);
+}*/
     }
 }

@@ -65,6 +65,7 @@
             this.txtServerIP.Name = "txtServerIP";
             this.txtServerIP.Size = new System.Drawing.Size(147, 21);
             this.txtServerIP.TabIndex = 2;
+            this.txtServerIP.Text = "127.0.0.1";
             // 
             // btnConnect
             // 
@@ -81,6 +82,7 @@
             this.txtClientLog.Location = new System.Drawing.Point(28, 65);
             this.txtClientLog.Multiline = true;
             this.txtClientLog.Name = "txtClientLog";
+            this.txtClientLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtClientLog.Size = new System.Drawing.Size(554, 220);
             this.txtClientLog.TabIndex = 4;
             this.txtClientLog.TabStop = false;
@@ -92,6 +94,7 @@
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(554, 21);
             this.txtMessage.TabIndex = 4;
+            this.txtMessage.TextChanged += new System.EventHandler(this.txtMessage_TextChanged);
             this.txtMessage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMessage_KeyPress);
             // 
             // cmbDeviceList

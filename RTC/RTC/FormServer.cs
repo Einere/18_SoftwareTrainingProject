@@ -14,155 +14,143 @@ using System.Net.Sockets;
 using System.Collections;
 using System.Threading;
 
-using System.Runtime.Serialization.Formatters.Binary;
+using PacketLibrary;
 
 namespace RTC {
     public partial class FormServer :Form {
-        [Serializable]
-        public enum MSG_TYPE {
-            MESSAGE,
-            EDITOR,
-            VOICE,
-            COMMAND
-        };
+        private static int SERVER_PORT = 6067;
 
-        [Serializable]
-        public struct Message {
-            public MSG_TYPE type;
-            public string message;
-        };
+        TcpListener listener = null;                              // 클라이언트 연결용
+        public static ArrayList clientList = new ArrayList();     // 다중 클라이언트를 지원하기 위한 pool
 
-        TcpListener listener = new TcpListener(IPAddress.Any, 6067);
-        public static ArrayList soketArray = new ArrayList();
+        Thread listeningThread = null;
+        Thread SendingThread = null;
+        Thread ReceivingThread = null;
                     
         public FormServer() {
-            InitializeComponent();      // 기본      
+            InitializeComponent();    
         }
 
         private void btnServerStart_Click(object sender, EventArgs e) {
-            if (lblServerState.Text == "서버 상태 : STOP") {
-                //Listener Start
-                listener.Start();
-                
-                //Client로 부터 연결을 기다리는 Thread생성
-                Thread t_WaitSocket = new Thread(new ThreadStart(WaitSocket));
-                t_WaitSocket.IsBackground = true;
-                t_WaitSocket.Start();
-                lblServerState.Text = "서버 상태 : START";
-                btnServerStart.Text = "Server Stop";
-            } else {
-                listener.Stop();        //listener가 멈추면
-                foreach (Socket soket in soketArray) {
-                    soket.Close();      //soketArray안에 있는 모든 소켓을 루프시키며 닫는다.
+            this.Invoke(new MethodInvoker(delegate () {
+                if (lblServerState.Text == "서버 상태 : STOP") {
+
+                    listeningThread = new Thread(new ThreadStart(ServerStart));
+                    listeningThread.Start();
+
+                    lblServerState.Text = "서버 상태 : START";
+                    btnServerStart.Text = "Server Stop";
+
+                } else {
+                    
+                    ServerStop();                    
+
+                    lblServerState.Text = "서버 상태 : STOP";
+                    btnServerStart.Text = "Server Start";
                 }
-                soketArray.Clear();
-                lblServerState.Text = "서버 상태 : STOP";
-                btnServerStart.Text = "Server Start";
-            }
+            }));
         }
 
         private void FormServer_FormClosed(object sender, FormClosedEventArgs e) {
-            Application.Exit();
-            listener.Stop();
+            ServerStop();
+            Application.Exit();    
         }
+        
+        public void ServerStart() {
+            listener = new TcpListener(IPAddress.Any, SERVER_PORT);
+            listener.Start();
+            
+            AddLog("Server starting...");
 
-        private void WaitSocket() {
-            Socket sktClient = null;    //클라이언트를 비우고
+            TcpClient client = null;
             while (true) {
                 try {
-                    sktClient = listener.AcceptSocket();    //소켓클라이언트에 listener를 연결
-                    CHAT chat = new CHAT();
-                    chat.Setup(sktClient, this.txtServerLog);
-                    //Chatting을 실행하는Thread 생성 
-                    Thread thd_ChatProcess = new Thread(new ThreadStart(chat.Process));
-                    thd_ChatProcess.Start();
-                    
-                    /* 
-                     * 입장시 접속자 아이피 출력 소스
-                     
-                    IPEndPoint remoteIpEndPoint = sktClient.RemoteEndPoint as IPEndPoint;
-                    IPEndPoint localIpEndPoint = sktClient.LocalEndPoint as IPEndPoint;
-                    if (remoteIpEndPoint != null) {
-                        // Using the RemoteEndPoint property.
-                        txtServerLog.AppendText("I am connected to " + remoteIpEndPoint.Address +  "on port number " + remoteIpEndPoint.Port + "\r\n");
+                    client = listener.AcceptTcpClient();
+                    if (client.Connected) {
+                        clientList.Add(client); // 1:N 지원
                     }
 
-                    if (localIpEndPoint != null) {
-                        // Using the LocalEndPoint property.
-                        txtServerLog.AppendText("My local IpAddress is :" + localIpEndPoint.Address + " I am connected on port number " + localIpEndPoint.Port + "\r\n");
-                    }
-                    */
+                    // 1:N 지원
+                    ReceivingThread = new Thread(() => Receive(client));
+                    ReceivingThread.Start();
+                } catch {
+                    clientList.Remove(client);
+                }
+            }
+        }
 
-                } catch (System.Exception) {
-                    FormServer.soketArray.Remove(sktClient);
+        public void ServerStop() {
+            listener.Stop();        //listener가 멈추면
+            try {
+                listeningThread.Abort();
+            } catch {
+            }
+
+            foreach (TcpClient client in clientList) {
+                client.Close();      //soketArray안에 있는 모든 소켓을 루프시키며 닫는다.
+            }
+
+            clientList.Clear();
+            AddLog("Server Stop");
+        }
+
+        public void AddLog(string text) {
+            this.Invoke(new MethodInvoker(delegate () {
+                if (txtServerLog.Text == string.Empty) {
+                    txtServerLog.Text += text;
+                } else {
+                    txtServerLog.Text += "\r\n" + text;
+                }
+
+                txtServerLog.Focus();
+                txtServerLog.SelectionStart = txtServerLog.Text.Length;
+                txtServerLog.ScrollToCaret();
+                lblServerState.Focus();
+            }));
+        }
+
+        public void Receive(TcpClient client) {
+            NetworkStream stream = client.GetStream();
+            byte[] buffer = null;
+            while (client.Connected ) {
+                try {
+                    Packet packet = Packet.ReceivePacket(stream, buffer);
+
+                    switch (packet.type) {
+                        case PacketType.MESSAGE:
+                            ProcessMessage(packet, client);
+                            break;
+                    }
+                } catch {
+                    clientList.Remove(client); // 1:N 지원
                     break;
                 }
             }
         }
-    }
 
-    public class CHAT {
-        private Encoding encoding = Encoding.GetEncoding("KS_C_5601-1987");
-        private TextBox txtLog;
-        private Socket socketClient;
-        private NetworkStream networkStream;
-        private StreamReader streamReader;
-
-        public void Setup(Socket socketClient, TextBox txtLog) {
-            this.txtLog = txtLog;
-            this.socketClient = socketClient;
-            //Network Stream을 생성
-            this.networkStream = new NetworkStream(socketClient);
-            FormServer.soketArray.Add(socketClient);
-            //Stream Reader을 생성
-            this.streamReader = new StreamReader(networkStream, encoding);
+        public void Send(Packet msg, TcpClient sender) {
+            foreach (TcpClient client in clientList) {
+                /*
+                if (client != sender) {
+                    SendingThread = new Thread(() => Packet.SendPacket(client.GetStream(), msg));
+                    SendingThread.Start();
+                }
+                */
+                Packet.SendPacket(client.GetStream(), msg);
+            }            
         }
 
-        public void Process() {
-            while (true) {
-                try {                 
-                    //
-                    BinaryFormatter binaryFormatter = new BinaryFormatter();
-                    Message msg = new Message();
-                    msg = (Message)binaryFormatter.Deserialize(networkStream);
+        public void ProcessMessage(Packet packet, TcpClient sender) {
+            MSGText msg = (MSGText)packet;
+            Send(msg, sender);
+            AddLog(msg.message);
+        }
 
-                    switch (msg.type) {
-                        case MSG_TYPE.MESSAGE:
-                            if (msg.message != null && msg.message != "") {
-                                if (this.txtLog.TextLength == 0)
-                                    this.txtLog.AppendText("\n" + msg.message);
-                                else
-                                    this.txtLog.AppendText("\r\n" + msg.message);
-
-                                //msg.message = msg.message;                                
-                                                                
-                                lock (FormServer.soketArray) {
-                                    foreach (Socket soket in FormServer.soketArray) { //sokretArray안의 soket값들을 돌리면서
-                                        NetworkStream stream = new NetworkStream(soket);
-                                        binaryFormatter.Serialize(stream, msg);
-                                    }
-                                }
-                            }                            
-
-                            break;
-                        case MSG_TYPE.EDITOR:
-
-                            break;
-                        case MSG_TYPE.VOICE:
-
-                            break;
-                        case MSG_TYPE.COMMAND:
-
-                            break;
-                        default:
-
-                            break;
-                    }
-                } catch (System.Exception) {
-                    FormServer.soketArray.Remove(socketClient);
-                    break;
-                }
-            }
+        private void FormServer_Load(object sender, EventArgs e) {
+            IPAddress ip = Dns.GetHostAddresses(Dns.GetHostName()).Where(
+                                address => address.AddressFamily == AddressFamily.InterNetwork
+                           ).ElementAt(2);
+            txtIP.Text = ip.ToString();
         }
     }
 }

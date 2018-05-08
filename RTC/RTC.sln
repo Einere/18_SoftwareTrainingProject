@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTC", "RTC\RTC.csproj", "{13767629-FBE1-4094-82E3-8D43FE409504}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacketLibrary", "PacketLibrary\PacketLibrary.csproj", "{C90BEAE9-E196-443B-925C-8E4C89AB4B5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{13767629-FBE1-4094-82E3-8D43FE409504}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13767629-FBE1-4094-82E3-8D43FE409504}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13767629-FBE1-4094-82E3-8D43FE409504}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C90BEAE9-E196-443B-925C-8E4C89AB4B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C90BEAE9-E196-443B-925C-8E4C89AB4B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C90BEAE9-E196-443B-925C-8E4C89AB4B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C90BEAE9-E196-443B-925C-8E4C89AB4B5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
