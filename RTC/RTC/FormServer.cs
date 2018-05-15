@@ -71,26 +71,43 @@ namespace RTC {
                     }
 
                     // 1:N 지원
+
+                    /*
                     ReceivingThread = new Thread(() => Receive(client));
                     ReceivingThread.Start();
+                    */
+
+                    new Thread(delegate () {
+                        Receive(client);
+                    }).Start();
+                    
                 } catch {
                     clientList.Remove(client);
                 }
             }
         }
-
+        
         public void ServerStop() {
-            listener.Stop();        //listener가 멈추면
+            if( listener != null )
+                listener.Stop();        //listener가 멈추면
+
             try {
                 listeningThread.Abort();
             } catch {
             }
+            
+            try {
+                MSGText msg = new MSGText(string.Format("<{0}> : {1}", "서버", "서버를 종료합니다."));
+                Send(msg, null);
 
-            foreach (TcpClient client in clientList) {
-                client.Close();      //soketArray안에 있는 모든 소켓을 루프시키며 닫는다.
+                foreach (TcpClient client in clientList) {
+                    client.Close();      //soketArray안에 있는 모든 소켓을 루프시키며 닫는다.
+                }
+            } catch {
             }
 
             clientList.Clear();
+            listener = null;
             AddLog("Server Stop");
         }
 
@@ -136,7 +153,14 @@ namespace RTC {
                     SendingThread.Start();
                 }
                 */
-                Packet.SendPacket(client.GetStream(), msg);
+
+                if (client != null && client.Connected && client != sender) {
+                    new Thread(delegate () {
+                        Packet.SendPacket(client.GetStream(), msg);
+                    }).Start();
+                }
+
+               // Packet.SendPacket(client.GetStream(), msg);
             }            
         }
 

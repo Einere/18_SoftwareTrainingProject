@@ -37,9 +37,10 @@ namespace RTC {
                 if (e.KeyChar == Convert.ToChar(Keys.Enter)) {      // Enter키
                     if (btnConnect.Text == "Log-Out") {             // 접속 상태
                         if (txtMessage.Text != string.Empty) {      // 빈 값인지 확인
-                            MSGText msg = new MSGText(string.Format("<{0}> : {1}", txtID.Text, txtMessage.Text));
+                            string text = string.Format("<{0}> : {1}", txtID.Text, txtMessage.Text);
+                            MSGText msg = new MSGText(text);
                             Send(msg);
-
+                            AddLog(text);
                             txtMessage.Clear();
                             txtMessage.Focus();
                             e.Handled = true;
@@ -128,7 +129,12 @@ namespace RTC {
             SendingThread = new Thread(() => Packet.SendPacket(stream, msg));
             SendingThread.Start();
             */
-            Packet.SendPacket(stream, msg);
+
+            new Thread(delegate () {
+                Packet.SendPacket(stream, msg);
+            }).Start();
+
+            //Packet.SendPacket(stream, msg);
         }
 
         public void Receive() {
@@ -176,19 +182,19 @@ namespace RTC {
         // 하위 메소드 들은 음성 채팅을 위한 소스이며 아직 구현 중
         // 참조: http://powerprog.blogspot.kr/2012/05/blog-post_14.html
         private void FormClient_Load(object sender, EventArgs e) {
-            //DeviceCollection devices = GetAll();
+            DeviceCollection devices = GetAllDevices();
+            foreach (DeviceInformation device in devices) {
 
-            DeviceCollection coll = DirectSoundCapture.GetDevices();
-            foreach (DeviceInformation dev in coll) {
-                cmbDeviceList.Items.Add(dev.Description.ToString());
+                cmbDeviceList.Items.Add(device.Description.ToString());
+
             }            
         }
 
         DirectSound _soundDevice;
         int devicenum = 0;
 
-        public static DeviceCollection GetAll() {
-            return DirectSound.GetDevices();            
+        public static DeviceCollection GetAllDevices() {
+            return DirectSound.GetDevices();    
         }
 
         public void CreateDevice() {
@@ -215,10 +221,7 @@ namespace RTC {
             _description.SizeInBytes = waveFormat.AverageBytesPerSecond / 5;
             _description.Format = waveFormat;
         }
-
-        private void txtMessage_TextChanged(object sender, EventArgs e) {
-
-        }
+        
         /*
 public void CreateBuffer() {
    Buffer = new SecondarySoundBuffer(_soundDevice, _description);

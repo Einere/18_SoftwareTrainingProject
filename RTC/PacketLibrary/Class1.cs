@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+
 namespace PacketLibrary {
     public enum PacketType {
         NONE,
