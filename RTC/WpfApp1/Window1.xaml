@@ -1,0 +1,43 @@
+﻿<Window x:Class="WpfApp1.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Window1" Height="450" Width="800">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/ggiampagrimm_29739349_236271506920115_5172566351662809088_n.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="IP" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Background="{x:Null}" FontSize="50" FontFamily="Ubuntu" Panel.ZIndex="1"/>
+        <Border CornerRadius="20" Height="100" Width="100" Grid.Row="0" Grid.Column="0" Background="#FF444242" Opacity="0.5"></Border>
+        <Label Content="ID" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Background="{x:Null}" FontFamily="Ubuntu" FontSize="50" Panel.ZIndex="1"/>
+        <Border CornerRadius="20" Height="100" Width="100" Grid.Row="1" Grid.Column="0" Background="#FF444242" Opacity="0.5"></Border>
+        <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="60" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="400" FontFamily="Ubuntu" Background="{x:Null}" BorderBrush="{x:Null}" Panel.ZIndex="1" FontSize="48"/>
+        <Border CornerRadius="20" Height="100" Width="450" Grid.Row="0" Grid.Column="1" Background="#FF444242" Opacity="0.5"></Border>
+        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Height="60" Margin="0,0,0,0" VerticalAlignment="Center" Width="400" FontFamily="Ubuntu" Background="{x:Null}" BorderBrush="{x:Null}" TextWrapping="Wrap" Panel.ZIndex="1" FontSize="50"/>
+        <Border CornerRadius="20" Height="100" Width="450" Grid.Row="1" Grid.Column="1" Background="#FF444242" Opacity="0.5"></Border>
+
+        <Border CornerRadius="20" Height="100" Width="100" Grid.Row="2" Grid.Column="1" Background="#FF444242" Opacity="0.5" Margin="173,20,321,19">
+            <Button Content="" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Width="80" Height="80" Background="#FF99C4C8" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/wireless-internet.png" Stretch="Uniform"/>
+                </Button.OpacityMask>
+            </Button>
+        </Border>
+        
+
+
+    </Grid>
+</Window>

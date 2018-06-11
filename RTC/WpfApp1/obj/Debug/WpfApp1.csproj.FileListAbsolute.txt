@@ -1,0 +1,17 @@
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\bin\Debug\WpfApp1.exe.config
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\bin\Debug\WpfApp1.exe
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\bin\Debug\WpfApp1.pdb
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\WpfApp1.csprojResolveAssemblyReference.cache
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\MainWindow.g.cs
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\App.g.cs
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\WpfApp1_MarkupCompile.cache
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\WpfApp1_MarkupCompile.lref
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\MainWindow.baml
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\WpfApp1.g.resources
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\WpfApp1.Properties.Resources.resources
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\WpfApp1.csproj.GenerateResource.cache
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\WpfApp1.csproj.CoreCompileInputs.cache
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\WpfApp1.exe
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\WpfApp1.pdb
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\Window1.g.cs
+C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\Window1.baml
