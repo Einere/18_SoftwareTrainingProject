@@ -31,6 +31,7 @@
             this.txtClientLog = new System.Windows.Forms.TextBox();
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.cmbDeviceList = new System.Windows.Forms.ComboBox();
+            this.btnVoiceChat = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblID
@@ -104,6 +105,16 @@
             this.cmbDeviceList.Size = new System.Drawing.Size(240, 20);
             this.cmbDeviceList.TabIndex = 5;
             // 
+            // btnVoiceChat
+            // 
+            this.btnVoiceChat.Location = new System.Drawing.Point(295, 366);
+            this.btnVoiceChat.Name = "btnVoiceChat";
+            this.btnVoiceChat.Size = new System.Drawing.Size(113, 23);
+            this.btnVoiceChat.TabIndex = 3;
+            this.btnVoiceChat.Text = "Start Voice Chat";
+            this.btnVoiceChat.UseVisualStyleBackColor = true;
+            this.btnVoiceChat.Click += new System.EventHandler(this.btnVoiceChat_Click);
+            // 
             // FormClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -112,6 +123,7 @@
             this.Controls.Add(this.cmbDeviceList);
             this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.txtClientLog);
+            this.Controls.Add(this.btnVoiceChat);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.txtServerIP);
             this.Controls.Add(this.lblServerIP);
@@ -137,5 +149,6 @@
         private System.Windows.Forms.TextBox txtClientLog;
         private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.ComboBox cmbDeviceList;
+        private System.Windows.Forms.Button btnVoiceChat;
     }
 }

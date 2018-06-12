@@ -8,12 +8,15 @@ using System.Net.Sockets;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+using SlimDX.DirectSound;
+using SlimDX.Multimedia;
 
 namespace PacketLibrary {
     public enum PacketType {
         NONE,
         MESSAGE,
-        INIT
+        INIT,
+        VOICE
     }
     
     [Serializable]
@@ -105,5 +108,20 @@ namespace PacketLibrary {
         public MSGText(PacketType _type, string _message) : base(_type) {
             message = _message;
         }
-    }    
+    }
+
+    [Serializable]
+    public class MSGVoice :Packet {
+        public string id = null;
+        public SoundBuffer buffer = null;
+
+        public MSGVoice() : base(PacketType.VOICE) {
+            id = null;
+        }
+        
+        public MSGVoice(string _id, SoundBuffer _buffer) : base(PacketType.VOICE) {
+            id = _id;
+            buffer = _buffer;
+        }
+    }
 }

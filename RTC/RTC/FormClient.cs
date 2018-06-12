@@ -146,7 +146,11 @@ namespace RTC {
                     switch (packet.type) {
                         case PacketType.MESSAGE:   
                             ProcessMessage(packet);
-                            break;                            
+                            break;
+
+                        case PacketType.VOICE:
+                            ProcessMessage(packet);
+                            break;
 
                         default:
                             break;
@@ -179,6 +183,11 @@ namespace RTC {
             AddLog(msg.message);
         }
 
+        public void ProcessVoice(Packet packet) {
+            MSGVoice msg = (MSGVoice)packet;
+            msg.buffer.Play(0, PlayFlags.None);
+        }
+
         // 하위 메소드 들은 음성 채팅을 위한 소스이며 아직 구현 중
         // 참조: http://powerprog.blogspot.kr/2012/05/blog-post_14.html
         private void FormClient_Load(object sender, EventArgs e) {
@@ -191,6 +200,7 @@ namespace RTC {
         }
 
         DirectSound _soundDevice;
+        SecondarySoundBuffer buffer;
         int devicenum = 0;
 
         public static DeviceCollection GetAllDevices() {
@@ -199,14 +209,14 @@ namespace RTC {
 
         public void CreateDevice() {
             var dev = DirectSound.GetDevices()[devicenum];
-            DirectSound _soundDevice = new DirectSound(dev.DriverGuid);
+            _soundDevice = new DirectSound(dev.DriverGuid);
         }
 
         public void SetLevel() {
             _soundDevice.SetCooperativeLevel(this.Handle, CooperativeLevel.Normal);
         }
 
-        public void SetBuffer() {
+        public SoundBufferDescription GetDescription() {
             // 먼저 출력 데이터의 포맷을 설정 
             var waveFormat = new WaveFormat();
             waveFormat.Channels = 1;
@@ -220,11 +230,54 @@ namespace RTC {
             var _description = new SoundBufferDescription();
             _description.SizeInBytes = waveFormat.AverageBytesPerSecond / 5;
             _description.Format = waveFormat;
+
+            return _description;
         }
         
-        /*
-public void CreateBuffer() {
-   Buffer = new SecondarySoundBuffer(_soundDevice, _description);
-}*/
+        
+        public void CreateVoiceBuffer() {
+            CreateDevice();
+            SetLevel();
+
+            buffer = new SecondarySoundBuffer(_soundDevice, GetDescription());
+            
+            MSGVoice msg = new MSGVoice(txtID.Text, buffer);
+            Send(msg);
+        }
+
+        bool voicing = false;
+        Thread voice_thread = null;
+
+        private void btnVoiceChat_Click(object sender, EventArgs e) {
+            this.Invoke(new MethodInvoker(delegate () {
+                if (btnVoiceChat.Text == "Start Voice Chat") {
+
+                    btnVoiceChat.Text = "Stop Voice Chat";
+                    btnVoiceChat.ForeColor = Color.Red;
+
+                    voicing = true;
+
+                    if( voice_thread == null) {
+                        voice_thread = new Thread(new ThreadStart(working));
+                    }
+
+                } else {
+
+                    btnVoiceChat.Text = "Start Voice Chat";
+                    btnVoiceChat.ForeColor = Color.Black;
+
+                    voicing = false;
+                    voice_thread.Abort();
+                    voice_thread = null;
+                }
+            }));
+        }
+
+        public void working() {
+            while (voicing) {
+                CreateVoiceBuffer();
+                Thread.Sleep(10);
+            }
+        }
     }
 }
