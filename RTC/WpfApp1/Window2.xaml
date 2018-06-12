@@ -34,7 +34,7 @@
             <Border CornerRadius="20" Height="90" Margin="10,10,10,10" Width="90" Grid.Row="0" Grid.Column="1" Background="#FF444242" Opacity="0.6">
                 <Button HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" Height="70" Background="#FF99C4C8" Panel.ZIndex="1" BorderBrush="#FF99C4C8">
                     <Button.OpacityMask>
-                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/folder.png" Stretch="Uniform"/>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/save.png" Stretch="Uniform"/>
                     </Button.OpacityMask>
                 </Button>
             </Border>
