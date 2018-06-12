@@ -15,20 +15,13 @@ using System.Windows.Shapes;
 namespace WpfApp1
 {
     /// <summary>
-    /// Window1.xaml에 대한 상호 작용 논리
+    /// Window2.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Window2 : Window
     {
-        public Window1()
+        public Window2()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Window2 mainForm = new Window2();
-            mainForm.Owner = this;
-            mainForm.Show();
         }
     }
 }

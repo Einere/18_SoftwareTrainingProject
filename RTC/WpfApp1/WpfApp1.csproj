@@ -58,6 +58,9 @@
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Window2.xaml.cs">
+      <DependentUpon>Window2.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -71,6 +74,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -112,6 +119,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\wireless-internet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\setting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\letter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\setttin1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\send1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\send2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

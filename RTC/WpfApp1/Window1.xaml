@@ -16,27 +16,41 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Label Content="IP" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Background="{x:Null}" FontSize="50" FontFamily="Ubuntu" Panel.ZIndex="1"/>
-        <Border CornerRadius="20" Height="100" Width="100" Grid.Row="0" Grid.Column="0" Background="#FF444242" Opacity="0.5"></Border>
-        <Label Content="ID" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Background="{x:Null}" FontFamily="Ubuntu" FontSize="50" Panel.ZIndex="1"/>
-        <Border CornerRadius="20" Height="100" Width="100" Grid.Row="1" Grid.Column="0" Background="#FF444242" Opacity="0.5"></Border>
-        <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="60" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="400" FontFamily="Ubuntu" Background="{x:Null}" BorderBrush="{x:Null}" Panel.ZIndex="1" FontSize="48"/>
-        <Border CornerRadius="20" Height="100" Width="450" Grid.Row="0" Grid.Column="1" Background="#FF444242" Opacity="0.5"></Border>
-        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Height="60" Margin="0,0,0,0" VerticalAlignment="Center" Width="400" FontFamily="Ubuntu" Background="{x:Null}" BorderBrush="{x:Null}" TextWrapping="Wrap" Panel.ZIndex="1" FontSize="50"/>
-        <Border CornerRadius="20" Height="100" Width="450" Grid.Row="1" Grid.Column="1" Background="#FF444242" Opacity="0.5"></Border>
+        <!--Label Content="IP" HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Background="{x:Null}" FontSize="50" FontFamily="Ubuntu" Panel.ZIndex="1"/>
+        <Border CornerRadius="20" Height="100" Width="100" Grid.Row="0" Grid.Column="0" Background="#FF444242" Opacity="0.6"></Border>
+        <Label Content="ID" HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Background="{x:Null}" FontFamily="Ubuntu" FontSize="50" Panel.ZIndex="1"/>
+        <Border CornerRadius="20" Height="100" Width="100" Grid.Row="1" Grid.Column="0" Background="#FF444242" Opacity="0.6"></Border-->
+        <Border CornerRadius="20" Height="100" Width="750" Grid.Row="0" Grid.Column="1" Background="#FF444242" Opacity="0.6"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Width="70" Height="70" Source="pack://siteoforigin:,,,/Resources/user.png" />
+            <TextBox Grid.Column="1" HorizontalAlignment="Center" Height="60" TextWrapping="Wrap" VerticalAlignment="Center" Width="600" FontFamily="Ubuntu" Background="{x:Null}" BorderBrush="{x:Null}" Panel.ZIndex="5" FontSize="48" Margin="0,0,50,0"/>
+        </Grid>
 
-        <Border CornerRadius="20" Height="100" Width="100" Grid.Row="2" Grid.Column="1" Background="#FF444242" Opacity="0.5" Margin="173,20,321,19">
-            <Button Content="" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Width="80" Height="80" Background="#FF99C4C8" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+        <Border CornerRadius="20" Height="100" Width="750" Grid.Row="1" Grid.Column="1" Background="#FF444242" Opacity="0.6"></Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Width="70" Height="70" Source="pack://siteoforigin:,,,/Resources/key.png" />
+            <TextBox Grid.Column="1" HorizontalAlignment="Center" Height="60" TextWrapping="Wrap" VerticalAlignment="Center" Width="600" FontFamily="Ubuntu" Background="{x:Null}" BorderBrush="{x:Null}" Panel.ZIndex="1" FontSize="48" Margin="0,0,50,0"/>
+        </Grid>
+
+        <Border CornerRadius="20" Height="100" Width="100" Grid.Row="2" Background="#FF444242" Opacity="0.6" >
+            <Button Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Width="80" Height="80" Background="#FF99C4C8" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="Button_Click">
                 <Button.OpacityMask>
                     <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/wireless-internet.png" Stretch="Uniform"/>
                 </Button.OpacityMask>
             </Button>
         </Border>
-        
+
 
 
     </Grid>
