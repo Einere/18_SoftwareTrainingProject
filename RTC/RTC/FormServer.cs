@@ -137,6 +137,10 @@ namespace RTC {
                         case PacketType.MESSAGE:
                             ProcessMessage(packet, client);
                             break;
+
+                        case PacketType.VOICE:
+
+                            break;
                     }
                 } catch {
                     clientList.Remove(client); // 1:N 지원
@@ -168,6 +172,12 @@ namespace RTC {
             MSGText msg = (MSGText)packet;
             Send(msg, sender);
             AddLog(msg.message);
+        }
+
+        public void ProcessVoice(Packet packet, TcpClient sender) {
+            MSGVoice msg = (MSGVoice)packet;
+            Send(msg, sender);
+            AddLog("receive from " + msg.id);
         }
 
         private void FormServer_Load(object sender, EventArgs e) {
