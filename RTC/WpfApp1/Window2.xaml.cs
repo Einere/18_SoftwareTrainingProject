@@ -23,5 +23,12 @@ namespace WpfApp1
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Window3 setting = new Window3();
+            setting.Owner = this;
+            setting.Show();
+        }
     }
 }

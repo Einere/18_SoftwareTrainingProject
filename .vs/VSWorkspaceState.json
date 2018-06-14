@@ -1,10 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\BabyEditor",
-    "\\BabyEditor\\editor",
-    "\\RTC"
+    "\\RTC",
+    "\\RTC\\WpfApp1"
   ],
-  "SelectedNode": "\\RTC\\RTC.sln",
+  "SelectedNode": "\\RTC\\WpfApp1\\WpfApp1.sln",
   "PreviewInSolutionExplorer": false
 }

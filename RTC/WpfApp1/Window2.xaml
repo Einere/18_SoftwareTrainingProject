@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Window2" Height="1000" Width="1300" ResizeMode="CanMinimize">
+        Title="RTC" Height="1000" Width="1300" ResizeMode="CanMinimize">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/ggiampagrimm_29739349_236271506920115_5172566351662809088_n.jpg" Stretch="UniformToFill"/>
@@ -39,7 +39,7 @@
                 </Button>
             </Border>
             <Border CornerRadius="20" Height="90" Margin="10,10,10,10" Width="90" Grid.Row="0" Grid.Column="2" Background="#FF444242" Opacity="0.6">
-                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" Height="70" Background="#FF99C4C8" BorderBrush="#FF99C4C8">
+                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" Height="70" Background="#FF99C4C8" BorderBrush="#FF99C4C8" Click="Button_Click">
                     <Button.OpacityMask>
                         <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/setttin1.png" Stretch="Uniform"/>
                     </Button.OpacityMask>

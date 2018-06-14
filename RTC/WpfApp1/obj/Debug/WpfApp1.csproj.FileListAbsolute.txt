@@ -17,3 +17,5 @@ C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\Window
 C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\Window1.baml
 C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\Window2.g.cs
 C:\Users\HJ\source\repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\Window2.baml
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\Window3.g.cs
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\WpfApp1\obj\Debug\Window3.baml

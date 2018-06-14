@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
+        Title="RTC" Height="450" Width="800">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/ggiampagrimm_29739349_236271506920115_5172566351662809088_n.jpg" Stretch="UniformToFill"/>
@@ -29,7 +29,14 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Width="70" Height="70" Source="pack://siteoforigin:,,,/Resources/user.png" />
+            <Image Grid.Column="0" Width="70" Height="70" Source="pack://siteoforigin:,,,/Resources/user.png" >
+                <Image.OpacityMask>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black" Offset="0"/>
+                        <GradientStop Color="Black" Offset="1"/>
+                    </LinearGradientBrush>
+                </Image.OpacityMask>
+            </Image>
             <TextBox Grid.Column="1" HorizontalAlignment="Center" Height="60" TextWrapping="Wrap" VerticalAlignment="Center" Width="600" FontFamily="Ubuntu" Background="{x:Null}" BorderBrush="{x:Null}" Panel.ZIndex="5" FontSize="48" Margin="0,0,50,0"/>
         </Grid>
 

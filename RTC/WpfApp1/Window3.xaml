@@ -1,0 +1,40 @@
+﻿<Window x:Class="WpfApp1.Window3"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Setting" Height="1000" Width="508">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/ggiampagrimm_29739349_236271506920115_5172566351662809088_n.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <StackPanel HorizontalAlignment="Left" Height="969" VerticalAlignment="Top" Width="492" AutomationProperties.Name="userList" x:Name="userList" ScrollViewer.VerticalScrollBarVisibility="Hidden" CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.3"/>
+                </StackPanel.Background>
+                <Canvas Height="120" AutomationProperties.Name="userInfo" x:Name="userInfo">
+                    <Label Content="server" Canvas.Left="10" Canvas.Top="10" Width="400" Height="50" FontSize="36" AutomationProperties.Name="userName" x:Name="userName"/>
+                    <Button Content="" Canvas.Left="432" Canvas.Top="10" Width="50" Background="#FFF2ECE8" Height="50" BorderBrush="#FFF2ECE8" Click="toggle_pencil">
+                        <Button.OpacityMask>
+                            <ImageBrush Stretch="Uniform" ImageSource="pack://siteoforigin:,,,/Resources/pencil.png"/>
+                        </Button.OpacityMask>
+                    </Button>
+                    <Button Content="" Canvas.Left="432" Canvas.Top="65" Width="50" Height="50" Background="#FFF2ECE8" BorderBrush="#FFF2ECE8" Click="toggle_mic">
+                        <Button.OpacityMask>
+                            <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/mic_on.png" Stretch="Uniform"/>
+                        </Button.OpacityMask>
+                    </Button>
+                    <Slider Canvas.Left="10" Canvas.Top="84" Width="400" Height="20"/>
+                </Canvas>
+                <Button Content="Button"/>
+
+
+            </StackPanel>
+        </ScrollViewer>
+        
+
+    </Grid>
+</Window>
