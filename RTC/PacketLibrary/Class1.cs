@@ -8,8 +8,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-using SlimDX.DirectSound;
-using SlimDX.Multimedia;
+using System.Runtime.Serialization;
 
 namespace PacketLibrary {
     public enum PacketType {
@@ -32,14 +31,14 @@ namespace PacketLibrary {
         }
 
         public static byte[] Serialize(Object o) {
-            MemoryStream ms = new MemoryStream(1024 * 4);
+            MemoryStream ms = new MemoryStream(1024 * 10);
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(ms, o);
             return ms.ToArray();
         }
 
         public static Object Deserialize(byte[] bt) {
-            MemoryStream ms = new MemoryStream(1024 * 4);
+            MemoryStream ms = new MemoryStream(1024 * 10);
             foreach (byte b in bt) {
                 ms.WriteByte(b);
             }
@@ -109,19 +108,5 @@ namespace PacketLibrary {
             message = _message;
         }
     }
-
-    [Serializable]
-    public class MSGVoice :Packet {
-        public string id = null;
-        public SoundBuffer buffer = null;
-
-        public MSGVoice() : base(PacketType.VOICE) {
-            id = null;
-        }
-        
-        public MSGVoice(string _id, SoundBuffer _buffer) : base(PacketType.VOICE) {
-            id = _id;
-            buffer = _buffer;
-        }
-    }
+    
 }
