@@ -47,8 +47,17 @@
             </Border>
         </Grid>
 
-        <TextBox Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1200" Height="550" Margin="10,10,10,10" VerticalScrollBarVisibility="Auto"></TextBox>
-        <TextBox Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1200" Height="150" Margin="10,10,10,10" VerticalScrollBarVisibility="Auto"></TextBox>
+        <Border CornerRadius="20" Height="540" Margin="10,10,10,10" Width="1240" Grid.Row="1" Grid.Column="0" Background="#FF444242" Opacity="0.6">
+        </Border>
+        <RichTextBox Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1200" Height="500" Margin="10,10,10,10" VerticalScrollBarVisibility="Auto" FontSize="10" Background="#FF494949" BorderBrush="{x:Null}">
+            <FlowDocument>
+                <Paragraph/>
+            </FlowDocument>
+        </RichTextBox>
+
+        <Border CornerRadius="20" Height="160" Margin="10,10,10,10" Width="1240" Grid.Row="2" Grid.Column="0" Background="#FF444242" Opacity="0.6">
+        </Border>
+        <TextBox Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1200" Height="120" Margin="10,10,10,10" VerticalScrollBarVisibility="Auto" Background="#FF494949" BorderBrush="{x:Null}"></TextBox>
 
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
