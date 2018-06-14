@@ -29,7 +29,8 @@
                     </Button>
                     <Slider Canvas.Left="10" Canvas.Top="84" Width="400" Height="20"/>
                 </Canvas>
-                <Button Content="Button"/>
+                <Button Content="Button" Click="add_user"/>
+                <Button Content="Button" Click="remove_user"/>
 
 
             </StackPanel>

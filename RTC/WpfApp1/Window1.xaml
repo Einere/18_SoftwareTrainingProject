@@ -51,7 +51,7 @@
         </Grid>
 
         <Border CornerRadius="20" Height="100" Width="100" Grid.Row="2" Background="#FF444242" Opacity="0.6" >
-            <Button Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Width="80" Height="80" Background="#FF99C4C8" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="Button_Click">
+            <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Background="#FF99C4C8" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="Button_Click">
                 <Button.OpacityMask>
                     <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/wireless-internet.png" Stretch="Uniform"/>
                 </Button.OpacityMask>

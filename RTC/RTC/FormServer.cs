@@ -22,7 +22,7 @@ namespace RTC {
 
         TcpListener listener = null;                              // 클라이언트 연결용
         public static ArrayList clientList = new ArrayList();     // 다중 클라이언트를 지원하기 위한 pool
-
+        
         Thread listeningThread = null;
         Thread SendingThread = null;
         Thread ReceivingThread = null;
@@ -82,7 +82,9 @@ namespace RTC {
                     }).Start();
                     
                 } catch {
+                    AddLog("at 1st serverstart... " + clientList.Count.ToString());
                     clientList.Remove(client);
+                    AddLog("at 2nd serverstart... "+clientList.Count.ToString());
                 }
             }
         }
@@ -90,20 +92,43 @@ namespace RTC {
         public void ServerStop() {
             if( listener != null )
                 listener.Stop();        //listener가 멈추면
-
-            try {
-                listeningThread.Abort();
-            } catch {
-            }
-            
+            AddLog("count is " + clientList.Count.ToString());
             try {
                 MSGText msg = new MSGText(string.Format("<{0}> : {1}", "서버", "서버를 종료합니다."));
-                Send(msg, null);
+                Task t = Task.Run(() =>
+                {
+                    foreach (TcpClient client in clientList)
+                    {
+                        if (client != null && client.Connected)
+                        {
+                            Packet.SendPacket(client.GetStream(), msg);
+                        }
+                    }
+                });
+                t.Wait();
+                AddLog("wating is finish~" + clientList.Count.ToString());
+                //Send(msg, null);
 
-                foreach (TcpClient client in clientList) {
-                    client.Close();      //soketArray안에 있는 모든 소켓을 루프시키며 닫는다.
+                for (int i = 0; i < clientList.Count; i++)
+                {
+                    (clientList[i] as TcpClient).Close();
+                    AddLog(i.ToString());
                 }
-            } catch {
+                //foreach (TcpClient client in clientList)
+                //{
+                //    client.Close();      //soketArray안에 있는 모든 소켓을 루프시키며 닫는다.
+                //    AddLog(clientList.Count.ToString());
+                //}
+            } catch(Exception e) {
+                AddLog(e.ToString());
+            }
+            try
+            {
+                listeningThread.Abort();
+            }
+            catch (Exception e)
+            {
+                AddLog(e.ToString());
             }
 
             clientList.Clear();

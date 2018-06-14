@@ -36,10 +36,11 @@ namespace WpfApp1
 
         bool isOn;
         bool isWritable;
-
+        Dictionary<string, int> map;
         public Window3()
         {
             InitializeComponent();
+            this.map = new Dictionary<string, int>();
             this.isOn = true;
         }
 
@@ -87,12 +88,22 @@ namespace WpfApp1
             Canvas userInfo = (Canvas)this.FindName("userInfo");
 
             Canvas addInfo = WPFObjectCopier.Clone<Canvas>(userInfo);
-            (addInfo.Children[0] as Label).Content = userList.Children.Count.ToString();
+            string name = userList.Children.Count.ToString();
+            (addInfo.Children[0] as Label).Content = name;
             if(userList.Children.Count * userInfo.Height > userList.Height)
             {
                 userList.Height += userInfo.Height;
             }
             userList.Children.Add(addInfo);
+            map.Add(name, userList.Children.Count);
+        }
+
+        private void remove_user(object sender, RoutedEventArgs e)
+        {
+            StackPanel userList = (StackPanel)this.FindName("userList");
+            Canvas userInfo = (Canvas)this.FindName("userInfo");
+
+            userList.Children.RemoveAt(map[(userList.Children.Count-1).ToString()]);
         }
     }
 }

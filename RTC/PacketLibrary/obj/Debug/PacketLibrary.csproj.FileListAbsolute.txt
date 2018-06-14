@@ -6,3 +6,13 @@ C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\Uploa
 C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\Upload\RTC\PacketLibrary\bin\Debug\SlimDX.dll
 C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\Upload\RTC\PacketLibrary\bin\Debug\SlimDX.pdb
 C:\Users\a\Downloads\학교\3-1\응용 소프트웨어 실습\프로젝트\Upload\RTC\PacketLibrary\bin\Debug\SlimDX.xml
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\PacketLibrary\bin\Debug\PacketLibrary.dll
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\PacketLibrary\bin\Debug\PacketLibrary.pdb
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\PacketLibrary\bin\Debug\SlimDX.dll
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\PacketLibrary\bin\Debug\SlimDX.pdb
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\PacketLibrary\bin\Debug\SlimDX.xml
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\PacketLibrary\obj\Debug\PacketLibrary.csprojResolveAssemblyReference.cache
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\PacketLibrary\obj\Debug\PacketLibrary.csproj.CoreCompileInputs.cache
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\PacketLibrary\obj\Debug\PacketLibrary.csproj.CopyComplete
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\PacketLibrary\obj\Debug\PacketLibrary.dll
+C:\Users\HJ\Source\Repos\18_SoftwareTrainingProject\RTC\PacketLibrary\obj\Debug\PacketLibrary.pdb
